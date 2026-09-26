@@ -1,87 +1,40 @@
-# 🎙️ ChismeWeb | The Listener Story Portal & Studio for Podcasts
+# 🎙️ ChismeWeb | El Buzón de Historias y Anécdotas para Podcasts
 
-> **The frictionless story portal for podcast hosts.** Stop digging through messy Gmail threads and lost Instagram DMs. Let listeners submit ghost stories, workplace drama, confessions, and relationship tea with zero login friction — complete with built-in **Web Speech Read-Aloud**, photo evidence attachments, host ranking, and **Patreon VIP flags**.
-
----
-
-## ⚡ The Problem ChismeWeb Solves
-
-Podcast hosts often dedicate episodes to reading tales sent in by their audience (paranormal events, petty revenge, dating disasters, office gossip). Today, listeners email them to a general Gmail or send direct messages on Instagram.
-
-This causes major pain points:
-1. **Buried Attachments**: Photo evidence, receipts, and screenshots get lost or expire in DMs.
-2. **Reading Fatigue**: Hosts spend hours reading lengthy emails manually just to find out if they have a punchline.
-3. **Ignored Patrons**: VIP paying members get lost in the noise of general inbox spam.
-4. **Disorganized Recording Prep**: No way to track reading times, tag stories by genre, or organize episode line-ups.
+> **El portal de anécdotas para creadores de contenido y podcasters.** Deja de perder historias increíbles en hilos saturados de Gmail o en mensajes directos de Instagram. Permite que tus escuchas envíen sus relatos paranormales, chismes godinez, citas del terror y confesiones sin fricción de cuentas ni contraseñas — con **Lectura en Voz Alta para cabina**, fotos de evidencia, ranking y **prioridad para tus Patrons**.
 
 ---
 
-## ✨ Key Features
+## 🎯 ¿Qué problema resuelve?
 
-- **⚡ Zero-Login Listener Submissions**: Casual listeners can draft and send stories with zero account creation friction.
-- **👑 Patron VIP Gold Flags & Priority Queue**: Paying supporters can authenticate or verify their tier to bump their tale to the top with an exclusive gold badge.
-- **🎙️ Built-in Browser Read Aloud**: Powered by the native Web Speech API. Hosts can listen to listener drafts hands-free at 1.0x, 1.25x, or 1.5x speed without paying costly external API bills.
-- **📸 Photo & Receipt Attachments**: Viewers can attach photos (haunted rooms, receipts, text screenshots) with an integrated zoom lightbox.
-- **⭐ Host Scoring & Spiciness Ranking**: Rate stories from 1 to 5 stars, track spiciness (🌶️ Mild to Nuclear), and upvote favorites with co-hosts.
-- **🏷️ Topic Channels**: Easily filter by *Paranormal & Glitches*, *Workplace Drama*, *Dating Disasters*, *Petty Revenge*, or *Wild Confessions*.
-- **📺 On-Air Teleprompter Mode**: Full-screen, high-contrast teleprompter with font scaling and host broadcast notes designed for live recording behind a mic.
-- **⏱️ Word Count & Read Time Estimates**: Displays exact on-air pacing so hosts can build the perfect 45-minute episode run.
+En los podcasts donde los hosts leen anécdotas de la audiencia, el método actual (enviar a un correo general o por DMs de Instagram) genera:
+1. **Evidencias perdidas**: Fotos de los hechos o capturas de WhatsApp que se extravían o caducan en los mensajes directos.
+2. **Cansancio visual**: Hosts leyendo correos kilométricos para ver si tienen remate antes de grabar.
+3. **Patrons ignorados**: Quienes apoyan en Patreon o membresías se pierden entre correos no deseados.
+4. **Descoordinación en cabina**: Sin control de tiempos al aire ni notas internas entre co-hosts.
 
 ---
 
-## 🚀 How to Deploy
+## ✨ Características Principales
 
-### Option 1: Deploy to Vercel (Recommended, 1-Click)
-
-1. Push this repository to GitHub:
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: launch ChismeWeb podcast portal"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/chismeWeb.git
-   git push -u origin main
-   ```
-2. Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
-3. Import your `chismeWeb` repository.
-4. Vercel will automatically detect Vite. Click **Deploy**.
+- **⚡ Envío sin Registro**: La audiencia redacta y manda su historia al instante sin crear cuentas ni contraseñas.
+- **👑 Insignias Patrón VIP**: Prioridad visual destacada en dorado para miembros que apoyan el proyecto.
+- **🎙️ Lectura en Voz Alta**: Síntesis de voz nativa del navegador con soporte en español para escuchar las anécdotas a 1.25x o 1.5x mientras preparas el set.
+- **📸 Adjuntos y Evidencias**: Visor y zoom para fotos del lugar, capturas de WhatsApp o tickets.
+- **⭐ Sistema de Calificación y Picante**: Calificación interna del host (1 a 5 estrellas), semáforo de picante (🌶️) y estatus de escaleta (*Seleccionada para Ep #42*, *Joyita del Mes*, etc.).
+- **🏷️ Categorías Temáticas**: Filtro ágil por *Paranormal y Sustos*, *Chisme Godín*, *Citas del Terror*, *Venganza* o *Confesiones*.
+- **📺 Modo Cabina al Aire**: Teleprompter de alto contraste con texto ampliable y notas internas para leer frente al micrófono.
 
 ---
 
-### Option 2: Deploy to GitHub Pages (100% Free)
-
-This repository includes a ready-to-run GitHub Actions workflow (`.github/workflows/deploy.yml`) and `vite.config.js` is already configured with `base: './'`:
-
-1. Push this code to GitHub.
-2. In your GitHub repository, navigate to **Settings** -> **Pages**.
-3. Under **Build and deployment > Source**, select **GitHub Actions**.
-4. The deployment workflow will automatically run, build, and publish your site at `https://YOUR_USERNAME.github.io/chismeWeb/`.
-
----
-
-## 🛠️ Local Development
+## 💻 Desarrollo Local
 
 ```bash
-# Install dependencies
+# Instalar dependencias
 npm install
 
-# Start local dev server
+# Iniciar servidor de desarrollo
 npm run dev
 
-# Build production static bundle
+# Compilar para producción (archivos estáticos en /dist)
 npm run build
-
-# Preview production build locally
-npm run preview
 ```
-
----
-
-## 💡 Tech Stack
-
-- **Framework**: React 18 + Vite 6 (Static SPA, no backend required)
-- **Styling**: Tailwind CSS + Custom Studio Dark Theme
-- **Icons**: Lucide React
-- **Audio Synthesis**: Native Browser Web Speech API (`SpeechSynthesis`)
-- **Effects**: Canvas Confetti
-- **Storage**: Client-side localStorage persistence
