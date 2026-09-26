@@ -95,7 +95,7 @@ export default function ProblemSolution() {
 
               <li className="flex items-start gap-3 text-xs sm:text-sm text-slate-200">
                 <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong>Modo Cabina para leer al aire:</strong> Vista en pantalla completa con letra grande y contraste oscuro para leer directo al micrófono.</span>
+                <span><strong>Escaleta y notas para co-hosts:</strong> Anota detalles clave para la grabación y copia el texto limpio para tus notas del episodio.</span>
               </li>
             </ul>
           </div>

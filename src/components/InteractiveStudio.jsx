@@ -2,20 +2,10 @@ import React, { useState } from 'react';
 import { Headphones, PenTool, Radio } from 'lucide-react';
 import SubmissionForm from './SubmissionForm';
 import HostDashboard from './HostDashboard';
-import TeleprompterModal from './TeleprompterModal';
 
 export default function InteractiveStudio({ stories, onStorySubmitted, onUpdateStory }) {
   const [activeTab, setActiveTab] = useState('host'); // 'host' o 'listener'
-  const [teleprompterStory, setTeleprompterStory] = useState(null);
   const [selectedStoryId, setSelectedStoryId] = useState(stories[0]?.id || null);
-
-  const handleOpenTeleprompter = (story) => {
-    setTeleprompterStory(story);
-  };
-
-  const handleMarkAired = (storyId) => {
-    onUpdateStory(storyId, { status: "Leída al Aire 🎙️" });
-  };
 
   const handleSwitchToHostView = (newStoryId) => {
     setActiveTab('host');
@@ -82,7 +72,6 @@ export default function InteractiveStudio({ stories, onStorySubmitted, onUpdateS
             <HostDashboard
               stories={stories}
               onUpdateStory={onUpdateStory}
-              onOpenTeleprompter={handleOpenTeleprompter}
               selectedStoryId={selectedStoryId}
               onSelectStory={setSelectedStoryId}
             />
@@ -94,14 +83,6 @@ export default function InteractiveStudio({ stories, onStorySubmitted, onUpdateS
           )}
         </div>
       </div>
-
-      {teleprompterStory && (
-        <TeleprompterModal
-          story={teleprompterStory}
-          onClose={() => setTeleprompterStory(null)}
-          onMarkAired={handleMarkAired}
-        />
-      )}
     </section>
   );
 }

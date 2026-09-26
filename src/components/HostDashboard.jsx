@@ -1,9 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { 
-  Search, Filter, Flame, Star, Sparkles, Volume2, Mic, 
-  Crown, Paperclip, Clock, Copy, Check, MessageSquare, 
-  SlidersHorizontal, ChevronRight, Eye, ThumbsUp, Trash2,
-  Calendar
+  Search, Filter, Star, Volume2, Crown, Paperclip, 
+  Clock, Copy, Check, SlidersHorizontal, Eye, ThumbsUp, Sparkles
 } from 'lucide-react';
 import { TOPICS, HOST_STATUSES } from '../data/mockStories';
 import ReadAloudPlayer from './ReadAloudPlayer';
@@ -11,7 +9,6 @@ import ReadAloudPlayer from './ReadAloudPlayer';
 export default function HostDashboard({ 
   stories, 
   onUpdateStory, 
-  onOpenTeleprompter, 
   selectedStoryId, 
   onSelectStory 
 }) {
@@ -19,7 +16,7 @@ export default function HostDashboard({
   const [selectedTopic, setSelectedTopic] = useState('all');
   const [patronOnlyFilter, setPatronOnlyFilter] = useState(false);
   const [statusFilter, setStatusFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('rank'); // 'rank', 'spiciness', 'newest', 'readTime'
+  const [sortBy, setSortBy] = useState('rank'); // 'rank', 'newest', 'readTime', 'upvotes'
   const [copiedId, setCopiedId] = useState(null);
   const [activeImageModal, setActiveImageModal] = useState(null);
 
@@ -43,8 +40,8 @@ export default function HostDashboard({
       if (sortBy === 'rank') {
         return (b.hostRating * 10 + b.upvotes) - (a.hostRating * 10 + a.upvotes);
       }
-      if (sortBy === 'spiciness') {
-        return b.spiciness - a.spiciness;
+      if (sortBy === 'upvotes') {
+        return b.upvotes - a.upvotes;
       }
       if (sortBy === 'newest') {
         return new Date(b.date || 0) - new Date(a.date || 0);
@@ -86,7 +83,7 @@ export default function HostDashboard({
   return (
     <div className="space-y-6">
       {/* Barra de métricas de cabina */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         <div className="bg-studio-900 border border-slate-800 p-4 rounded-2xl">
           <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
             Total en Bandeja
@@ -117,21 +114,6 @@ export default function HostDashboard({
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-black text-emerald-300">{queuedCount}</span>
             <span className="text-xs text-emerald-400/80 font-medium">en escaleta</span>
-          </div>
-        </div>
-
-        <div className="bg-studio-900 border border-rose-500/20 p-4 rounded-2xl">
-          <span className="text-[11px] font-semibold text-rose-400 uppercase tracking-wider block mb-1">
-            Modo Cabina en Vivo
-          </span>
-          <div className="flex items-center gap-2 mt-1">
-            <button
-              onClick={() => activeStory && onOpenTeleprompter(activeStory)}
-              className="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-lg shadow-rose-950/40"
-            >
-              <Mic className="w-3.5 h-3.5" />
-              <span>Abrir al Aire</span>
-            </button>
           </div>
         </div>
       </div>
@@ -171,7 +153,7 @@ export default function HostDashboard({
                 className="bg-transparent text-slate-200 outline-none cursor-pointer"
               >
                 <option value="rank" className="bg-studio-900">Mejor Calificadas</option>
-                <option value="spiciness" className="bg-studio-900">Más Picantes 🌶️</option>
+                <option value="upvotes" className="bg-studio-900">Más Votadas</option>
                 <option value="newest" className="bg-studio-900">Más Recientes</option>
                 <option value="readTime" className="bg-studio-900">Lectura Rápida</option>
               </select>
@@ -268,9 +250,6 @@ export default function HostDashboard({
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span title="Picante">
-                        {'🌶️'.repeat(story.spiciness)}
-                      </span>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -311,7 +290,7 @@ export default function HostDashboard({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => copyStoryScript(activeStory)}
-                      className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition border border-slate-700"
+                      className="flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition border border-slate-700"
                       title="Copiar texto limpio para escaleta o notas"
                     >
                       {copiedId === activeStory.id ? (
@@ -322,17 +301,9 @@ export default function HostDashboard({
                       ) : (
                         <>
                           <Copy className="w-3.5 h-3.5 text-slate-400" />
-                          <span>Copiar Texto</span>
+                          <span>Copiar Texto para Notas</span>
                         </>
                       )}
-                    </button>
-
-                    <button
-                      onClick={() => onOpenTeleprompter(activeStory)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-semibold transition shadow-md shadow-rose-950/40"
-                    >
-                      <Mic className="w-3.5 h-3.5" />
-                      <span>Leer al Aire</span>
                     </button>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  Volume2, Crown, Image, Layers, Flame, Star, Check 
+  Volume2, Crown, Image, Layers, Clock, Star, Check 
 } from 'lucide-react';
 
 export default function Features() {
@@ -41,11 +41,11 @@ export default function Features() {
       description: "Califica de 1 a 5 estrellas, vota con tu equipo por los relatos favoritos y márcalas como 'Seleccionada para Ep #42' o 'Leída al Aire'."
     },
     {
-      icon: Flame,
-      color: "from-orange-500 to-red-600",
-      title: "Termómetro de Picante y Tiempos",
-      badge: "Ritmo del Programa",
-      description: "Conoce el nivel de salseo (de Tranqui a Caos Total) y los minutos estimados de lectura al aire para planear bloques de tiempo exactos."
+      icon: Clock,
+      color: "from-blue-500 to-indigo-600",
+      title: "Cálculo de Tiempos de Lectura",
+      badge: "Ritmo del Show",
+      description: "Conoce los minutos estimados de lectura al aire y el conteo de palabras de cada anécdota para armar bloques de tiempo exactos en tu escaleta."
     }
   ];
 

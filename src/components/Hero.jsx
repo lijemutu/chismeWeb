@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  ArrowRight, Volume2, Crown, Flame, CheckCircle, Radio, Sparkles
+  ArrowRight, Volume2, Crown, Star, CheckCircle, Radio, Sparkles
 } from 'lucide-react';
 
 export default function Hero() {
@@ -105,11 +105,11 @@ export default function Hero() {
 
             <div className="p-3.5 rounded-2xl bg-studio-900/60 border border-slate-800/80 flex items-center gap-3">
               <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400">
-                <Flame className="w-4 h-4" />
+                <Star className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-white block">Termómetro Salseo</span>
-                <span className="text-[11px] text-slate-400">Califica la intensidad</span>
+                <span className="text-xs font-bold text-white block">Ranking de Historias</span>
+                <span className="text-[11px] text-slate-400">Califica 1 a 5 estrellas</span>
               </div>
             </div>
           </div>
