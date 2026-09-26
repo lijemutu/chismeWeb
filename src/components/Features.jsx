@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
-  Volume2, Crown, Image, Layers, Flame, Star, 
-  Sparkles, Check, ArrowRight, ShieldCheck, Clock, FileText 
+  Volume2, Crown, Image, Layers, Flame, Star, Check 
 } from 'lucide-react';
 
 export default function Features() {
@@ -9,59 +8,59 @@ export default function Features() {
     {
       icon: Volume2,
       color: "from-rose-500 to-rose-600",
-      title: "Built-In Read Aloud Audio",
+      title: "Lectura con Voz Integrada",
       badge: "Speech Synthesis",
-      description: "Stop reading 20-paragraph emails with tired eyes. Hit Play and let the browser's speech engine read the story aloud at 1.25x speed while you multitask."
+      description: "Olvídate de leer con la vista cansada antes de grabar. Dale Play y escucha la historia narrada en voz alta al ritmo que prefieras (1.25x o 1.5x)."
     },
     {
       icon: Crown,
       color: "from-amber-500 to-amber-600",
-      title: "Patron VIP Flags & Priority Queue",
-      badge: "Monetization Perk",
-      description: "Reward paying supporters. Patrons get golden cards, tier callouts, and jump to the top of your review dashboard so you never miss a member's story."
+      title: "Insignia y Prioridad Patrón VIP",
+      badge: "Incentivo de Membresía",
+      description: "Consiente a quienes apoyan tu proyecto. Los Patrons pueden identificarse para que sus anécdotas aparezcan destacadas en dorado y con lectura prioritaria."
     },
     {
       icon: Image,
       color: "from-purple-500 to-indigo-600",
-      title: "Photo Receipts & Attachments",
-      badge: "Visual Proof",
-      description: "Listeners can drop evidence photos directly into their draft: haunted attic shots, unhinged text screenshots, or restaurant receipts. View and zoom in 1 click."
+      title: "Evidencias, Fotos y Capturas",
+      badge: "Soporte Visual",
+      description: "Tu audiencia puede adjuntar fotos del lugar, capturas de pantalla de WhatsApp o tickets. Visualízalas en tamaño completo con un clic."
     },
     {
       icon: Layers,
       color: "from-blue-500 to-cyan-600",
-      title: "Smart Topic & Genre Sorting",
-      badge: "Curated Channels",
-      description: "Planning a spooky Halloween special or a workplace confession marathon? Filter stories by topic tags in seconds without keyword hacking."
+      title: "Organización por Temáticas",
+      badge: "Filtros Rápidos",
+      description: "¿Vas a grabar un especial de Halloween o de citas del terror? Filtra al momento sin tener que buscar palabras clave entre cientos de correos."
     },
     {
       icon: Star,
       color: "from-emerald-500 to-teal-600",
-      title: "Host Ranking & Episode Triage",
-      badge: "Editorial Control",
-      description: "Give stories a 1-5 star score, upvote favorite moments with your co-hosts, and tag them directly as 'Queued for Episode #42' or 'Read On Air'."
+      title: "Sistema de Ranking de Cabina",
+      badge: "Curaduría del Show",
+      description: "Califica de 1 a 5 estrellas, vota con tu equipo por los relatos favoritos y márcalas como 'Seleccionada para Ep #42' o 'Leída al Aire'."
     },
     {
       icon: Flame,
       color: "from-orange-500 to-red-600",
-      title: "Spiciness & Timing Meters",
-      badge: "Pacing Insights",
-      description: "Know the intensity level (Mild to Nuclear) and see on-air reading time estimates before you queue a story, keeping your show pacing crisp."
+      title: "Termómetro de Picante y Tiempos",
+      badge: "Ritmo del Programa",
+      description: "Conoce el nivel de salseo (de Tranqui a Caos Total) y los minutos estimados de lectura al aire para planear bloques de tiempo exactos."
     }
   ];
 
   return (
-    <section id="features" className="py-20 relative">
+    <section id="caracteristicas" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
-            Engineered For Creators
+            Herramientas para Creadores
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-3">
-            Everything You Need to Run <span className="bg-gradient-to-r from-rose-400 to-amber-400 bg-clip-text text-transparent">Story-Driven Shows</span>
+            Todo lo que necesitas para tu <span className="bg-gradient-to-r from-rose-400 to-amber-400 bg-clip-text text-transparent">Programa de Anécdotas</span>
           </h2>
           <p className="text-slate-400 text-sm sm:text-base mt-3">
-            Designed specifically around the workflow of comedy, true crime, paranormal, and drama podcast hosts.
+            Opciones adaptables que podemos ajustar a la medida de la dinámica de tu show y co-hosts.
           </p>
         </div>
 
@@ -93,7 +92,7 @@ export default function Features() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center text-xs font-medium text-rose-400 group-hover:text-rose-300">
-                  <span>Included in static release</span>
+                  <span>Disponible para implementar</span>
                   <Check className="w-3.5 h-3.5 ml-1.5" />
                 </div>
               </div>

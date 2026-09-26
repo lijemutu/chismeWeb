@@ -1,12 +1,18 @@
 import React from 'react';
 import { 
-  Sparkles, ArrowRight, Play, Volume2, ShieldCheck, 
-  Crown, Flame, CheckCircle, Zap, Radio, Mic 
+  ArrowRight, Volume2, Crown, Flame, CheckCircle, Radio, Sparkles
 } from 'lucide-react';
 
-export default function Hero({ onOpenDeployGuide }) {
+export default function Hero() {
   const scrollToDemo = () => {
-    const el = document.getElementById('interactive-demo');
+    const el = document.getElementById('demo-interactivo');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToFeatures = () => {
+    const el = document.getElementById('caracteristicas');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -14,7 +20,6 @@ export default function Hero({ onOpenDeployGuide }) {
 
   return (
     <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
-      {/* Dynamic Background Gradients & Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none">
         <div className="absolute top-10 left-1/4 w-[500px] h-[500px] bg-rose-600/15 rounded-full blur-[140px]"></div>
         <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[120px]"></div>
@@ -22,59 +27,59 @@ export default function Hero({ onOpenDeployGuide }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
-          {/* Top Pill Alert */}
+          {/* Badge superior */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-studio-900 border border-rose-500/30 shadow-lg shadow-rose-950/20 mb-8 animate-float">
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
             </span>
             <span className="text-xs font-semibold text-rose-300">
-              Built Specifically for Story & Chisme Podcasts
+              Diseñado para Podcasts de Anécdotas, Terror y Comedia
             </span>
             <span className="text-slate-600">|</span>
-            <span className="text-xs text-slate-400 flex items-center gap-1">
-              Static Demo Ready
+            <span className="text-xs text-slate-400">
+              Cero Fricción para la Audiencia
             </span>
           </div>
 
-          {/* Main Hero Title */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
-            Stop digging through <span className="underline decoration-rose-500/50 decoration-wavy">messy Gmail</span> & Instagram DMs for listener tales.
+          {/* Título principal */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.15] mb-6">
+            Deja de buscar anécdotas en un <span className="underline decoration-rose-500/60 decoration-wavy">Gmail saturado</span> o en DMs de Instagram.
           </h1>
 
-          {/* Hero Subtitle */}
+          {/* Subtítulo */}
           <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10">
-            A frictionless, zero-login submission portal for your listeners to submit ghost stories, workplace drama, and wild confessions — complete with <strong className="text-white font-semibold">Web Speech Read-Aloud</strong>, photo attachments, host ranking, and <strong className="text-amber-400 font-semibold">Patreon VIP flags</strong>.
+            El buzón donde tus escuchas mandan sus chismes, leyendas y relatos sin registrarse ni crear cuentas. Incluye <strong className="text-white font-semibold">lectura en voz alta para cabina</strong>, fotos de evidencia, ranking de historias y <strong className="text-amber-400 font-semibold">prioridad para tus Patrons</strong>.
           </p>
 
-          {/* CTA Buttons */}
+          {/* Botones de acción */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
             <button
               onClick={scrollToDemo}
               className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-500 via-rose-600 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold text-base rounded-2xl shadow-xl shadow-rose-950/60 flex items-center justify-center gap-2.5 transition transform active:scale-95 group"
             >
-              <span>Try Live Interactive Studio</span>
+              <span>Probar Demo Interactivo</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <button
-              onClick={onOpenDeployGuide}
+              onClick={scrollToFeatures}
               className="w-full sm:w-auto px-7 py-4 bg-studio-900/90 hover:bg-studio-850 text-slate-200 hover:text-white font-semibold text-base rounded-2xl border border-slate-700/80 transition flex items-center justify-center gap-2.5 shadow-lg"
             >
-              <Zap className="w-4 h-4 text-amber-400" />
-              <span>Deploy to Vercel / GitHub Pages</span>
+              <Sparkles className="w-4 h-4 text-rose-400" />
+              <span>Ver Qué Puede Tener Tu Podcast</span>
             </button>
           </div>
 
-          {/* Key Value Proposition Mini Badges */}
+          {/* Tarjetas de características clave */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto text-left">
             <div className="p-3.5 rounded-2xl bg-studio-900/60 border border-slate-800/80 flex items-center gap-3">
               <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400">
                 <Volume2 className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-white block">Read Aloud TTS</span>
-                <span className="text-[11px] text-slate-400">Hands-free preview</span>
+                <span className="text-xs font-bold text-white block">Lectura con Voz</span>
+                <span className="text-[11px] text-slate-400">Escucha sin leer</span>
               </div>
             </div>
 
@@ -83,8 +88,8 @@ export default function Hero({ onOpenDeployGuide }) {
                 <Crown className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-white block">Patron VIP Sync</span>
-                <span className="text-[11px] text-slate-400">Gold badges & priority</span>
+                <span className="text-xs font-bold text-white block">Patron VIP</span>
+                <span className="text-[11px] text-slate-400">Insignia dorada</span>
               </div>
             </div>
 
@@ -93,8 +98,8 @@ export default function Hero({ onOpenDeployGuide }) {
                 <CheckCircle className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-white block">Zero Login Friction</span>
-                <span className="text-[11px] text-slate-400">Listeners draft instantly</span>
+                <span className="text-xs font-bold text-white block">Cero Registro</span>
+                <span className="text-[11px] text-slate-400">Escriben de inmediato</span>
               </div>
             </div>
 
@@ -103,8 +108,8 @@ export default function Hero({ onOpenDeployGuide }) {
                 <Flame className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-xs font-bold text-white block">Spiciness & Ranking</span>
-                <span className="text-[11px] text-slate-400">Triage stories fast</span>
+                <span className="text-xs font-bold text-white block">Termómetro Salseo</span>
+                <span className="text-[11px] text-slate-400">Califica la intensidad</span>
               </div>
             </div>
           </div>

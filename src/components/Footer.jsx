@@ -1,7 +1,7 @@
 import React from 'react';
-import { Mic, ExternalLink } from 'lucide-react';
+import { Mic } from 'lucide-react';
 
-export default function Footer({ onOpenDeployGuide }) {
+export default function Footer() {
   return (
     <footer className="bg-studio-950 border-t border-slate-900 py-12 text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,40 +12,40 @@ export default function Footer({ onOpenDeployGuide }) {
             </div>
             <div>
               <span className="text-base font-extrabold text-white tracking-tight">Chisme<span className="text-rose-500">Web</span></span>
-              <p className="text-[11px] text-slate-500">The listener story portal & studio for podcasts</p>
+              <p className="text-[11px] text-slate-500">Buzón de anécdotas e historias para podcasts</p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={onOpenDeployGuide}
-              className="text-slate-300 hover:text-white transition"
-            >
-              Deploy Guide (Vercel / GitHub)
-            </button>
-            <span>•</span>
             <a
-              href="#interactive-demo"
+              href="#demo-interactivo"
               className="text-slate-300 hover:text-white transition"
             >
-              Live Demo
+              Demo en Vivo
             </a>
             <span>•</span>
             <a
-              href="#features"
+              href="#caracteristicas"
               className="text-slate-300 hover:text-white transition"
             >
-              Features
+              Herramientas
+            </a>
+            <span>•</span>
+            <a
+              href="#faq"
+              className="text-slate-300 hover:text-white transition"
+            >
+              Preguntas Frecuentes
             </a>
           </div>
         </div>
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-slate-500">
-            © 2026 ChismeWeb. Designed for comedy, true crime, supernatural & drama podcasters worldwide.
+            © 2026 ChismeWeb. Diseñado para creadores de contenido y podcasters de comedia, misterio y entretenimiento.
           </p>
           <div className="flex items-center gap-1.5 text-slate-500">
-            <span>Built with zero backend for easy static deployment</span>
+            <span>Versión demo interactiva estática</span>
           </div>
         </div>
       </div>

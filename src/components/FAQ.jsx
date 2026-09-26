@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0);
 
   const faqs = [
     {
-      q: "Why don't regular listeners have to log in?",
-      a: "Requiring an account or login causes a massive 70%+ drop-off in listener submissions. People listening in their car or on the subway want to open a link and immediately type their story without remembering a password. Only Patrons have the option to authenticate to claim their VIP priority flags."
+      q: "¿Por qué no pedirle contraseña o cuenta a la audiencia?",
+      a: "Pedir registro provoca que más del 70% de las personas abandonen la página sin mandar nada. Los escuchas que vienen de Spotify o YouTube quieren escribir su historia de inmediato en su celular. Quienes sí pueden autenticarse de forma opcional son los Patrons VIP para reclamar su insignia de prioridad."
     },
     {
-      q: "How does the 'Read Aloud' feature work without a costly AI bill?",
-      a: "ChismeWeb utilizes the native Web Speech API built into all modern web browsers (Chrome, Safari, Edge, Firefox). This means the browser itself synthesizes and speaks the text aloud with zero latency, zero cloud API bills, and complete privacy."
+      q: "¿Cómo funciona la lectura en voz alta sin generar costos extra?",
+      a: "El portal utiliza la tecnología de voz integrada en los navegadores web modernos (Chrome, Safari, Edge, Firefox). Lee el texto en voz alta con acento natural en español de forma instantánea, sin requerir servicios de nube de paga ni suscripciones externas."
     },
     {
-      q: "Can I deploy this completely static on GitHub Pages or Vercel?",
-      a: "Yes! The entire demo and frontend are built as a static Single Page Application (SPA). There are no Node servers or databases to maintain. You can host it for $0/mo on Vercel or GitHub Pages, and it loads instantaneously for listeners."
+      q: "¿Se pueden cambiar las categorías según la temática de mi podcast?",
+      a: "¡Totalmente! Podemos poner las categorías exactas de tu programa: desde leyendas de terror, relatos paranormales o anécdotas de oficina, hasta chismes de bodas, infidelidades o preguntas de la comunidad."
     },
     {
-      q: "How do photo attachments work?",
-      a: "Listeners can drop photos directly onto the page (e.g. screenshots of wild text conversations, receipts, or photos of haunted basements). In this static demo, images are previewed locally with zero data loss. For production setups, this can connect to free services like Cloudinary, Imgur API, or AWS S3."
+      q: "¿Cómo se visualizan las fotos y evidencias en cabina?",
+      a: "Cuando un escucha sube una foto o captura de pantalla de WhatsApp, aparece en miniatura junto a la historia en el panel del host. Con un clic se abre en pantalla completa para que tú y tu co-host puedan reaccionar a la evidencia en vivo."
     },
     {
-      q: "How do co-hosts collaborate on episode story curation?",
-      a: "Hosts can star-rate stories 1-5, upvote their favorite segments, leave internal broadcast notes (e.g., 'Carlos reads Brenda's quote'), and tag stories as 'Queued for Episode #42'. When ready, one click launches the full-screen Studio Teleprompter mode."
+      q: "¿Cómo ayuda a incentivar que la gente se suscriba al Patreon?",
+      a: "Al ver que las historias de los Patrons tienen insignia dorada y prioridad garantizada al aire, tus escuchas más apasionados tienen un motivo directo para unirse a tu membresía mensual y asegurarse de que lean su anécdota."
     }
   ];
 
@@ -32,13 +32,13 @@ export default function FAQ() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <span className="text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">
-            Frequently Asked Questions
+            Preguntas Frecuentes
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
-            Everything You Need to Know
+            Dudas Comunes sobre el Portal
           </h2>
           <p className="text-slate-400 text-sm mt-2">
-            Got questions about implementing ChismeWeb for your podcast?
+            Respuestas clave para adaptar esta herramienta a tu podcast.
           </p>
         </div>
 

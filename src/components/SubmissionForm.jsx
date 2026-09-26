@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Send, Sparkles, Image, Check, AlertCircle, ShieldCheck, 
-  Crown, HelpCircle, Flame, Eye, Lock, ArrowRight, RefreshCw, UploadCloud
+  Send, Sparkles, Image, Check, Crown, Flame, ArrowRight, UploadCloud, ShieldCheck
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { TOPICS } from '../data/mockStories';
@@ -14,13 +13,12 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [spiciness, setSpiciness] = useState(3);
   const [isPatron, setIsPatron] = useState(false);
-  const [patronEmail, setPatronEmail] = useState('');
-  const [patronTier, setPatronTier] = useState('Ghost Hunter Tier ($10/mo)');
+  const [patronTier, setPatronTier] = useState('Patrón Nivel Leyenda ($150 MXN/mes)');
   const [attachments, setAttachments] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [newlyCreatedStory, setNewlyCreatedStory] = useState(null);
 
-  // Compute live word count & reading time
+  // Conteo de palabras y tiempo estimado en cabina
   const words = content.trim() ? content.trim().split(/\s+/).length : 0;
   const readTimeMinutes = Math.max(1, Math.ceil(words / 130));
 
@@ -36,7 +34,7 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
           name: file.name,
           type: 'image',
           url: uploadEvent.target.result,
-          caption: `Listener attachment: ${file.name}`
+          caption: `Evidencia enviada: ${file.name}`
         };
         setAttachments(prev => [...prev, newAtt]);
       };
@@ -50,10 +48,10 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
         ...prev,
         {
           id: `att-demo-${Date.now()}`,
-          name: 'text_receipt_evidence.jpg',
+          name: 'ticket_cuenta_tres.jpg',
           type: 'image',
           url: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
-          caption: 'Demo Evidence: Photo receipt / screenshot attached'
+          caption: 'Evidencia demo: Foto del ticket o captura de WhatsApp'
         }
       ]);
     } else {
@@ -61,10 +59,10 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
         ...prev,
         {
           id: `att-demo-${Date.now()}`,
-          name: 'haunted_attic_photo.jpg',
+          name: 'foto_lugar_hechos.jpg',
           type: 'image',
           url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
-          caption: 'Demo Evidence: Unexplained shadow taken in the attic'
+          caption: 'Evidencia demo: Fotografía del lugar o sombra sospechosa'
         }
       ]);
     }
@@ -75,14 +73,14 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
   };
 
   const loadSampleDraft = () => {
-    setTopic('Workplace Drama');
-    setTitle('My boss tried to invoice me for the coffee I drank before quitting');
-    setContent(`I worked as a junior designer at an agency where our creative director charged a 50-cent 'brewing fee' out of his personal Venmo for Keurig pods. On my last Friday after handing in my two-week notice, he handed me an itemized invoice for $184.50 spanning 18 months of French Vanilla roasts. When I laughed, he threatened to withhold my final portfolio files. Attached is the actual Venmo request and his insane follow-up Slack message!`);
-    setAuthorName('CaffeineRebel');
+    setTopic('Chisme Godín');
+    setTitle('Me descontaron del finiquito las cápsulas de café que me tomé en dos años');
+    setContent(`Trabajé como diseñadora en una agencia de publicidad en la colonia Roma. El director administrativo cobraba 15 pesos por cápsula de café con alcancía en la cocina. El día que entregué mi renuncia voluntaria, me entregó una hoja engrapada con una lista que decía: 'Consumo no liquidado de café y galletas 2024-2025: $1,420 MXN'. Me amenazó con no firmarme la carta de recomendación si no se lo pagaba en efectivo en ese instante. ¡Les adjunto la foto de la nota en servilleta que me dio!`);
+    setAuthorName('GodínEnLibertad');
     setIsAnonymous(false);
     setSpiciness(4);
     setIsPatron(true);
-    setPatronTier('VIP Tea Spiller ($15/mo)');
+    setPatronTier('Patrón Nivel Leyenda ($150 MXN/mes)');
     addDemoAttachment('receipt');
   };
 
@@ -90,16 +88,13 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
     e.preventDefault();
     if (!title.trim() || !content.trim()) return;
 
-    // Trigger celebration confetti
     try {
       confetti({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 }
       });
-    } catch (err) {
-      // Fallback
-    }
+    } catch (err) {}
 
     const topicObj = TOPICS.find(t => t.id === topic) || { icon: '✨' };
 
@@ -108,15 +103,15 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
       title: title.trim(),
       topic,
       topicIcon: topicObj.icon,
-      authorName: isAnonymous ? 'Anonymous Listener' : (authorName.trim() || 'Anonymous Listener'),
+      authorName: isAnonymous ? 'Escucha Anónimo' : (authorName.trim() || 'Escucha Anónimo'),
       isAnonymous,
       isPatron,
       patronTier: isPatron ? patronTier : null,
-      createdAt: 'Just now',
+      createdAt: 'Hace un momento',
       date: new Date().toISOString().split('T')[0],
       spiciness,
       hostRating: 4,
-      status: 'Needs Host Review',
+      status: 'Por Revisar',
       upvotes: 1,
       estimatedReadTime: `${readTimeMinutes} min`,
       wordCount: words,
@@ -142,7 +137,6 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
 
   return (
     <div className="max-w-3xl mx-auto">
-      {/* Submitter Success Banner */}
       {isSubmitted && newlyCreatedStory ? (
         <div className="p-8 rounded-3xl bg-studio-900 border border-emerald-500/30 text-center shadow-2xl relative overflow-hidden animate-fadeIn">
           <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -152,23 +146,23 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
           </div>
 
           <span className="px-3 py-1 bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-xs font-semibold rounded-full uppercase tracking-wider">
-            Tale Successfully Submitted!
+            ¡Historia Recibida con Éxito!
           </span>
 
           <h3 className="text-2xl font-bold text-white mt-3 mb-2">
-            Your story is in the Host's Inbox!
+            Tu anécdota ya está en la bandeja del podcast
           </h3>
           <p className="text-slate-300 text-sm max-w-lg mx-auto mb-6">
-            "{newlyCreatedStory.title}" was instantly packaged with your tags, estimated read time ({newlyCreatedStory.estimatedReadTime}), and attachments.
-            {newlyCreatedStory.isPatron && " Your Patreon VIP priority badge was verified!"}
+            "{newlyCreatedStory.title}" fue organizada con sus etiquetas, tiempo estimado al aire ({newlyCreatedStory.estimatedReadTime}) y evidencias fotográficas.
+            {newlyCreatedStory.isPatron && " Además cuenta con insignia dorada de Patrón VIP."}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               onClick={() => onSwitchToHostView(newlyCreatedStory.id)}
-              className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-rose-900/30 flex items-center justify-center gap-2 transition"
+              className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold text-sm rounded-xl shadow-lg shadow-rose-950/30 flex items-center justify-center gap-2 transition"
             >
-              <span>See It in Host Studio Dashboard</span>
+              <span>Ver en la Bandeja del Host</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -176,44 +170,42 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
               onClick={handleResetForm}
               className="w-full sm:w-auto px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm rounded-xl transition border border-slate-700"
             >
-              Submit Another Tale
+              Mandar Otra Historia
             </button>
           </div>
         </div>
       ) : (
-        /* The Drafting Form */
         <form onSubmit={handleSubmit} className="bg-studio-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative">
-          {/* Header Info */}
+          {/* Encabezado */}
           <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-6 border-b border-slate-800">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs font-bold uppercase tracking-wider text-rose-400 bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">
-                  Zero Login Required
+                  Sin Registro Requerido
                 </span>
-                <span className="text-xs text-slate-400">Listener Submission Portal</span>
+                <span className="text-xs text-slate-400">Portal para la Comunidad</span>
               </div>
               <h2 className="text-2xl font-bold text-white tracking-tight">
-                Submit Your Tale to the Show
+                Manda tu Anécdota o Relato al Programa
               </h2>
             </div>
 
-            {/* Quick Demo Pre-fill button */}
             <button
               type="button"
               onClick={loadSampleDraft}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-rose-300 bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/40 rounded-xl transition"
-              title="Click to automatically fill out a sample story for testing"
+              title="Llenar con una historia simulada para probar"
             >
               <Sparkles className="w-3.5 h-3.5 text-rose-400" />
-              <span>Fill Sample Story</span>
+              <span>Cargar Ejemplo</span>
             </button>
           </div>
 
           <div className="space-y-6">
-            {/* 1. Category / Topic Picker */}
+            {/* 1. Categoría */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
-                1. Select Topic / Category <span className="text-rose-400">*</span>
+                1. Selecciona la Categoría <span className="text-rose-400">*</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {TOPICS.filter(t => t.id !== 'all').map(t => (
@@ -228,40 +220,40 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                     }`}
                   >
                     <span className="text-lg">{t.icon}</span>
-                    <span className="truncate">{t.name.split('&')[0]}</span>
+                    <span className="truncate">{t.name}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* 2. Story Title */}
+            {/* 2. Título */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  2. Story Title / Headline <span className="text-rose-400">*</span>
+                  2. Título de la Anécdota <span className="text-rose-400">*</span>
                 </label>
-                <span className="text-[11px] text-slate-500">Hook the hosts in 1 sentence</span>
+                <span className="text-[11px] text-slate-500">Un título llamativo para abrir el tema</span>
               </div>
               <input
                 type="text"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. The night our baby monitor picked up a whispering voice..."
+                placeholder="Ej. La noche que el monitor de mi bebé grabó una voz extraña..."
                 className="w-full px-4 py-3 bg-studio-850 border border-slate-800 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 rounded-xl text-white placeholder-slate-500 text-sm transition outline-none"
               />
             </div>
 
-            {/* 3. Story Content & Live Stats */}
+            {/* 3. Contenido y estadísticas */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  3. The Tale / Chisme <span className="text-rose-400">*</span>
+                  3. El Chisme o Relato Completo <span className="text-rose-400">*</span>
                 </label>
                 <div className="flex items-center gap-3 text-[11px] text-slate-400">
-                  <span>{words} words</span>
+                  <span>{words} palabras</span>
                   <span>•</span>
-                  <span className="text-rose-400 font-medium">~{readTimeMinutes} min on-air read</span>
+                  <span className="text-rose-400 font-medium">~{readTimeMinutes} min al aire</span>
                 </div>
               </div>
               <textarea
@@ -269,22 +261,22 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                 rows={6}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Tell everything in detail: what happened, how it made you feel, and the shocking conclusion. Hosts love raw, honest details!"
+                placeholder="Cuéntanos todo con pelos y señales: qué pasó, en qué ciudad, cómo reaccionaron y el desenlace. ¡Entre más detalles honestos, mejor se escucha en vivo!"
                 className="w-full px-4 py-3 bg-studio-850 border border-slate-800 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 rounded-xl text-white placeholder-slate-500 text-sm transition outline-none resize-y leading-relaxed font-sans"
               ></textarea>
             </div>
 
-            {/* 4. Spiciness Slider */}
+            {/* 4. Termómetro de Picante / Salseo */}
             <div className="p-4 bg-studio-850/60 border border-slate-800 rounded-2xl">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <Flame className="w-4 h-4 text-orange-500" />
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Spiciness / Intensity Rating
+                    Nivel de Picante / Intensidad
                   </span>
                 </div>
                 <span className="text-xs font-semibold text-orange-400">
-                  {'🌶️'.repeat(spiciness)} ({spiciness === 1 ? 'Mild & Wholesome' : spiciness === 3 ? 'Juicy Drama' : 'Full Chaos / Nuclear'})
+                  {'🌶️'.repeat(spiciness)} ({spiciness === 1 ? 'Leve / Familiar' : spiciness === 3 ? 'Buen Salseo' : 'Caos Total / Sin Censura'})
                 </span>
               </div>
               <input
@@ -296,18 +288,18 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                 className="w-full accent-rose-500 cursor-pointer h-2 bg-slate-800 rounded-lg"
               />
               <div className="flex justify-between text-[10px] text-slate-500 mt-1">
-                <span>Mild & Cozy</span>
-                <span>Moderate Tea</span>
-                <span>Pure Unhinged Chaos</span>
+                <span>Tranqui</span>
+                <span>Chisme Sabroso</span>
+                <span>Caos Inexplicable</span>
               </div>
             </div>
 
-            {/* 5. Photos & Receipts Attachment Dropzone */}
+            {/* 5. Fotos y Evidencias */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
                   <Image className="w-3.5 h-3.5 text-rose-400" />
-                  <span>4. Attach Evidence / Photos (Optional)</span>
+                  <span>4. Fotos o Capturas de Evidencia (Opcional)</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <button
@@ -315,7 +307,7 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                     onClick={() => addDemoAttachment('photo')}
                     className="text-[11px] text-rose-400 hover:text-rose-300 underline"
                   >
-                    + Add Spooky Photo Demo
+                    + Foto misteriosa demo
                   </button>
                   <span className="text-slate-600">|</span>
                   <button
@@ -323,12 +315,11 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                     onClick={() => addDemoAttachment('receipt')}
                     className="text-[11px] text-amber-400 hover:text-amber-300 underline"
                   >
-                    + Add Text Screenshot Demo
+                    + Captura WhatsApp demo
                   </button>
                 </div>
               </div>
 
-              {/* Upload box */}
               <div className="border-2 border-dashed border-slate-800 hover:border-slate-700 bg-studio-850/40 rounded-2xl p-5 text-center transition">
                 <input
                   type="file"
@@ -347,15 +338,14 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                   </div>
                   <div>
                     <span className="text-xs font-semibold text-rose-400 hover:underline">
-                      Click to upload photos, screenshots, or receipts
+                      Sube fotos, capturas de pantalla o tickets
                     </span>
                     <p className="text-[11px] text-slate-500 mt-0.5">
-                      PNG, JPG, WebP up to 10MB each
+                      JPG, PNG o WebP
                     </p>
                   </div>
                 </label>
 
-                {/* Previews */}
                 {attachments.length > 0 && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 pt-4 border-t border-slate-800 text-left">
                     {attachments.map(att => (
@@ -366,7 +356,7 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                           type="button"
                           onClick={() => removeAttachment(att.id)}
                           className="absolute top-2 right-2 bg-red-600/80 hover:bg-red-600 text-white rounded-md p-1 text-xs opacity-90 transition"
-                          title="Remove file"
+                          title="Eliminar archivo"
                         >
                           ✕
                         </button>
@@ -377,19 +367,18 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
               </div>
             </div>
 
-            {/* 6. Submitter Identity & Patron VIP Switch */}
+            {/* 6. Identidad y Casilla Patrón VIP */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              {/* Alias / Name */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
-                  5. Your Name or Alias
+                  5. Tu Nombre o Apodo
                 </label>
                 <input
                   type="text"
                   disabled={isAnonymous}
                   value={isAnonymous ? '' : authorName}
                   onChange={(e) => setAuthorName(e.target.value)}
-                  placeholder={isAnonymous ? "Kept 100% Anonymous" : "e.g. Maria from Chicago"}
+                  placeholder={isAnonymous ? "100% Anónimo al aire" : "Ej. Valeria de Guadalajara"}
                   className="w-full px-4 py-2.5 bg-studio-850 border border-slate-800 rounded-xl text-white placeholder-slate-500 text-sm disabled:opacity-50 outline-none focus:border-rose-500"
                 />
                 <label className="flex items-center gap-2 mt-2 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
@@ -399,11 +388,11 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                     onChange={(e) => setIsAnonymous(e.target.checked)}
                     className="accent-rose-500 rounded"
                   />
-                  <span>Read my story as 100% Anonymous</span>
+                  <span>Leer mi relato como 100% Anónimo</span>
                 </label>
               </div>
 
-              {/* Patron VIP Login / Verification */}
+              {/* Casilla Patrón VIP */}
               <div className={`p-4 rounded-2xl border transition-all ${
                 isPatron 
                   ? 'bg-amber-500/10 border-amber-500/40 shadow-lg shadow-amber-950/20' 
@@ -413,7 +402,7 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                   <div className="flex items-center gap-1.5">
                     <Crown className="w-4 h-4 text-amber-400" />
                     <span className="text-xs font-bold text-amber-300 uppercase tracking-wide">
-                      Patron VIP Supporter?
+                      ¿Eres Patrón / Miembro VIP?
                     </span>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
@@ -428,43 +417,43 @@ export default function SubmissionForm({ onStorySubmitted, onSwitchToHostView })
                 </div>
 
                 <p className="text-[11px] text-slate-400 mb-2">
-                  Patron stories are highlighted in gold and bumped to the top of the hosts' recording queue.
+                  Las historias de Patrons se destacan en dorado y tienen prioridad de lectura.
                 </p>
 
                 {isPatron && (
                   <div className="space-y-2 mt-2 pt-2 border-t border-amber-500/20 animate-fadeIn">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] text-amber-300 font-medium">Select Tier:</span>
+                      <span className="text-[11px] text-amber-300 font-medium">Nivel:</span>
                       <select
                         value={patronTier}
                         onChange={(e) => setPatronTier(e.target.value)}
                         className="bg-slate-900 border border-amber-500/30 text-amber-200 text-xs rounded-lg px-2 py-1 outline-none"
                       >
-                        <option value="VIP Superfan ($5/mo)">VIP Superfan ($5/mo)</option>
-                        <option value="Ghost Hunter Tier ($10/mo)">Ghost Hunter Tier ($10/mo)</option>
-                        <option value="Inner Circle Executive Producer ($25/mo)">Inner Circle ($25/mo)</option>
+                        <option value="Miembro VIP ($50 MXN/mes)">Miembro VIP ($50 MXN/mes)</option>
+                        <option value="Patrón Nivel Leyenda ($150 MXN/mes)">Patrón Nivel Leyenda ($150 MXN/mes)</option>
+                        <option value="Productor Ejecutivo VIP ($250 MXN/mes)">Productor Ejecutivo ($250 MXN/mes)</option>
                       </select>
                     </div>
                     <div className="flex items-center gap-1 text-[10px] text-emerald-400">
                       <ShieldCheck className="w-3 h-3" />
-                      <span>Verified Patreon Perk Active</span>
+                      <span>Insignia de Prioridad Activada</span>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Botón de Envío */}
             <div className="pt-4 border-t border-slate-800">
               <button
                 type="submit"
                 className="w-full py-4 px-6 bg-gradient-to-r from-rose-500 via-rose-600 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold text-base rounded-2xl shadow-xl shadow-rose-950/50 flex items-center justify-center gap-3 transition transform active:scale-[0.99]"
               >
                 <Send className="w-5 h-5" />
-                <span>Send Tale to Host Studio</span>
+                <span>Mandar Historia al Programa</span>
               </button>
               <p className="text-center text-[11px] text-slate-500 mt-2">
-                🔒 Privacy Guarantee: Your personal contact info is never displayed publicly.
+                🔒 Tus datos están protegidos y nunca se revelarán correos o información privada.
               </p>
             </div>
           </div>

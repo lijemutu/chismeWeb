@@ -3,7 +3,7 @@ import {
   Search, Filter, Flame, Star, Sparkles, Volume2, Mic, 
   Crown, Paperclip, Clock, Copy, Check, MessageSquare, 
   SlidersHorizontal, ChevronRight, Eye, ThumbsUp, Trash2,
-  ExternalLink, Calendar
+  Calendar
 } from 'lucide-react';
 import { TOPICS, HOST_STATUSES } from '../data/mockStories';
 import ReadAloudPlayer from './ReadAloudPlayer';
@@ -23,27 +23,19 @@ export default function HostDashboard({
   const [copiedId, setCopiedId] = useState(null);
   const [activeImageModal, setActiveImageModal] = useState(null);
 
-  // Active story for detailed inspection
   const activeStory = useMemo(() => {
     return stories.find(s => s.id === selectedStoryId) || stories[0] || null;
   }, [stories, selectedStoryId]);
 
-  // Filtered and sorted stories
   const filteredStories = useMemo(() => {
     return stories.filter(story => {
-      // Search
       const matchesSearch = 
         story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         story.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
         story.authorName.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Topic
       const matchesTopic = selectedTopic === 'all' || story.topic === selectedTopic;
-
-      // Patron
       const matchesPatron = !patronOnlyFilter || story.isPatron;
-
-      // Status
       const matchesStatus = statusFilter === 'all' || story.status === statusFilter;
 
       return matchesSearch && matchesTopic && matchesPatron && matchesStatus;
@@ -81,28 +73,27 @@ export default function HostDashboard({
   };
 
   const copyStoryScript = (story) => {
-    const textToCopy = `🎙️ [EPISODE SCRIPT: ${story.title}]\nTopic: ${story.topic}\nSubmitted by: ${story.authorName} ${story.isPatron ? '(Patron Supporter)' : ''}\n\n"${story.content}"\n\n[Host Notes: ${story.hostNotes || 'None'}]`;
+    const textToCopy = `🎙️ [HISTORIA PARA EPISODIO: ${story.title}]\nTema: ${story.topic}\nEnviada por: ${story.authorName} ${story.isPatron ? '(Patrón VIP)' : ''}\n\n"${story.content}"\n\n[Notas de Cabina: ${story.hostNotes || 'Ninguna'}]`;
     navigator.clipboard.writeText(textToCopy);
     setCopiedId(story.id);
     setTimeout(() => setCopiedId(null), 2500);
   };
 
-  // Quick stats
   const totalStories = stories.length;
   const patronCount = stories.filter(s => s.isPatron).length;
-  const queuedCount = stories.filter(s => s.status.includes('Queued')).length;
+  const queuedCount = stories.filter(s => s.status.includes('Seleccionada')).length;
 
   return (
     <div className="space-y-6">
-      {/* Studio Header & Stats Quickbar */}
+      {/* Barra de métricas de cabina */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
         <div className="bg-studio-900 border border-slate-800 p-4 rounded-2xl">
           <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
-            Total Submissions
+            Total en Bandeja
           </span>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-black text-white">{totalStories}</span>
-            <span className="text-xs text-emerald-400 font-medium">Inbox active</span>
+            <span className="text-xs text-emerald-400 font-medium">historias listas</span>
           </div>
         </div>
 
@@ -111,27 +102,27 @@ export default function HostDashboard({
             <Crown className="w-16 h-16 text-amber-400" />
           </div>
           <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider block mb-1">
-            Patron VIP Stories
+            Historias de Patrons VIP
           </span>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-black text-amber-300">{patronCount}</span>
-            <span className="text-xs text-amber-400/80 font-medium">Priority queue</span>
+            <span className="text-xs text-amber-400/80 font-medium">prioridad</span>
           </div>
         </div>
 
         <div className="bg-studio-900 border border-emerald-500/20 p-4 rounded-2xl">
           <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider block mb-1">
-            Queued for Airing
+            Listas para Grabar
           </span>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-black text-emerald-300">{queuedCount}</span>
-            <span className="text-xs text-emerald-400/80 font-medium">Next episode</span>
+            <span className="text-xs text-emerald-400/80 font-medium">en escaleta</span>
           </div>
         </div>
 
         <div className="bg-studio-900 border border-rose-500/20 p-4 rounded-2xl">
           <span className="text-[11px] font-semibold text-rose-400 uppercase tracking-wider block mb-1">
-            Studio Teleprompter
+            Modo Cabina en Vivo
           </span>
           <div className="flex items-center gap-2 mt-1">
             <button
@@ -139,29 +130,27 @@ export default function HostDashboard({
               className="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-lg shadow-rose-950/40"
             >
               <Mic className="w-3.5 h-3.5" />
-              <span>Launch Mic Mode</span>
+              <span>Abrir al Aire</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Filter and Control Bar */}
+      {/* Barra de Filtros y Búsqueda */}
       <div className="bg-studio-900 border border-slate-800 p-4 rounded-2xl space-y-3.5 shadow-xl">
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          {/* Search bar */}
           <div className="relative flex-1">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search tales, keywords (e.g. ghost, boss, wedding, date)..."
+              placeholder="Buscar anécdotas por título, palabras clave (bruja, jefe, boda, tinder)..."
               className="w-full pl-10 pr-4 py-2 bg-studio-850 border border-slate-800 focus:border-rose-500 rounded-xl text-white text-xs placeholder-slate-500 outline-none transition"
             />
           </div>
 
           <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
-            {/* Patron Filter Toggle */}
             <button
               onClick={() => setPatronOnlyFilter(prev => !prev)}
               className={`flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl border transition shrink-0 ${
@@ -171,10 +160,9 @@ export default function HostDashboard({
               }`}
             >
               <Crown className="w-3.5 h-3.5 text-amber-400" />
-              <span>Patron VIP Only</span>
+              <span>Solo Patrons VIP</span>
             </button>
 
-            {/* Sort Dropdown */}
             <div className="flex items-center gap-1.5 bg-studio-850 px-2.5 py-1.5 rounded-xl border border-slate-800 text-xs shrink-0">
               <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400" />
               <select
@@ -182,16 +170,16 @@ export default function HostDashboard({
                 onChange={(e) => setSortBy(e.target.value)}
                 className="bg-transparent text-slate-200 outline-none cursor-pointer"
               >
-                <option value="rank" className="bg-studio-900">Highest Ranked</option>
-                <option value="spiciness" className="bg-studio-900">Spiciest Drama 🌶️</option>
-                <option value="newest" className="bg-studio-900">Newest Submissions</option>
-                <option value="readTime" className="bg-studio-900">Shortest Read</option>
+                <option value="rank" className="bg-studio-900">Mejor Calificadas</option>
+                <option value="spiciness" className="bg-studio-900">Más Picantes 🌶️</option>
+                <option value="newest" className="bg-studio-900">Más Recientes</option>
+                <option value="readTime" className="bg-studio-900">Lectura Rápida</option>
               </select>
             </div>
           </div>
         </div>
 
-        {/* Topic Pills */}
+        {/* Categorías */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           {TOPICS.map(t => (
             <button
@@ -210,19 +198,19 @@ export default function HostDashboard({
         </div>
       </div>
 
-      {/* Main Split View: Left List, Right Active Inspector */}
+      {/* Vista dividida */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Story Cards List */}
+        {/* Columna Izquierda: Lista de historias */}
         <div className="lg:col-span-6 space-y-3">
           <div className="flex items-center justify-between text-xs text-slate-400 px-1">
-            <span>Showing {filteredStories.length} listener tales</span>
-            <span>Click any tale to review or play audio</span>
+            <span>{filteredStories.length} relatos encontrados</span>
+            <span>Selecciona uno para revisar o reproducir voz</span>
           </div>
 
           {filteredStories.length === 0 ? (
             <div className="p-8 text-center bg-studio-900 border border-slate-800 rounded-2xl text-slate-400">
-              <p className="font-semibold text-white mb-1">No tales match your filter</p>
-              <p className="text-xs">Try clearing search terms or toggling off the Patron filter.</p>
+              <p className="font-semibold text-white mb-1">No hay historias con ese filtro</p>
+              <p className="text-xs">Intenta limpiar la búsqueda o apagar el filtro de Patrons.</p>
             </div>
           ) : (
             filteredStories.map(story => {
@@ -237,7 +225,6 @@ export default function HostDashboard({
                       : 'bg-studio-900/90 border-slate-800 hover:border-slate-700 hover:bg-studio-850/50'
                   }`}
                 >
-                  {/* Top Badges */}
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="px-2 py-0.5 rounded-lg text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
@@ -247,7 +234,7 @@ export default function HostDashboard({
                       {story.isPatron && (
                         <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
                           <Crown className="w-3 h-3 text-amber-400" />
-                          <span>{story.patronTier || 'Patron VIP'}</span>
+                          <span>{story.patronTier || 'Patrón VIP'}</span>
                         </span>
                       )}
 
@@ -262,20 +249,17 @@ export default function HostDashboard({
                     <span className="text-[11px] text-slate-500">{story.createdAt}</span>
                   </div>
 
-                  {/* Title */}
                   <h4 className="text-sm font-bold text-white group-hover:text-rose-300 transition line-clamp-2 mb-1.5">
                     {story.title}
                   </h4>
 
-                  {/* Preview excerpt */}
                   <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-3">
                     {story.content}
                   </p>
 
-                  {/* Footer Meta & Quick Actions */}
                   <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-800/60 text-xs text-slate-400">
                     <div className="flex items-center gap-3">
-                      <span>By <strong className="text-slate-300">{story.authorName}</strong></span>
+                      <span>De <strong className="text-slate-300">{story.authorName}</strong></span>
                       <span>•</span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3 text-slate-500" />
@@ -284,17 +268,16 @@ export default function HostDashboard({
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span title="Spiciness">
+                      <span title="Picante">
                         {'🌶️'.repeat(story.spiciness)}
                       </span>
-                      {/* Upvotes button */}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleUpvote(story.id, story.upvotes);
                         }}
                         className="flex items-center gap-1 px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-[11px] transition"
-                        title="Upvote story priority"
+                        title="Votar por esta historia"
                       >
                         <ThumbsUp className="w-3 h-3 text-rose-400" />
                         <span>{story.upvotes}</span>
@@ -307,11 +290,10 @@ export default function HostDashboard({
           )}
         </div>
 
-        {/* Right Column: Full Inspector & Host Triage Station */}
+        {/* Columna Derecha: Inspector detallado del Host */}
         <div className="lg:col-span-6 lg:sticky lg:top-24">
           {activeStory ? (
             <div className="bg-studio-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
-              {/* Header Info */}
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                   <div className="flex items-center gap-2">
@@ -321,38 +303,36 @@ export default function HostDashboard({
                     {activeStory.isPatron && (
                       <span className="px-2.5 py-1 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1 shadow-sm">
                         <Crown className="w-3.5 h-3.5 text-amber-400" />
-                        <span>{activeStory.patronTier || 'Patron VIP'}</span>
+                        <span>{activeStory.patronTier || 'Patrón VIP'}</span>
                       </span>
                     )}
                   </div>
 
                   <div className="flex items-center gap-2">
-                    {/* Copy clean text button */}
                     <button
                       onClick={() => copyStoryScript(activeStory)}
                       className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition border border-slate-700"
-                      title="Copy clean script for podcast notes or teleprompter"
+                      title="Copiar texto limpio para escaleta o notas"
                     >
                       {copiedId === activeStory.id ? (
                         <>
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-emerald-400">Copied!</span>
+                          <span className="text-emerald-400">¡Copiado!</span>
                         </>
                       ) : (
                         <>
                           <Copy className="w-3.5 h-3.5 text-slate-400" />
-                          <span>Copy Script</span>
+                          <span>Copiar Texto</span>
                         </>
                       )}
                     </button>
 
-                    {/* Launch Teleprompter button */}
                     <button
                       onClick={() => onOpenTeleprompter(activeStory)}
                       className="flex items-center gap-1.5 px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-semibold transition shadow-md shadow-rose-950/40"
                     >
                       <Mic className="w-3.5 h-3.5" />
-                      <span>On-Air Mode</span>
+                      <span>Leer al Aire</span>
                     </button>
                   </div>
                 </div>
@@ -362,16 +342,16 @@ export default function HostDashboard({
                 </h3>
 
                 <div className="flex items-center justify-between text-xs text-slate-400 mt-2">
-                  <span>Author: <strong className="text-rose-400">{activeStory.authorName}</strong></span>
+                  <span>Autor: <strong className="text-rose-400">{activeStory.authorName}</strong></span>
                   <div className="flex items-center gap-3">
-                    <span>{activeStory.wordCount} words</span>
+                    <span>{activeStory.wordCount} palabras</span>
                     <span>•</span>
-                    <span className="text-rose-400 font-semibold">{activeStory.estimatedReadTime} read</span>
+                    <span className="text-rose-400 font-semibold">{activeStory.estimatedReadTime} de lectura</span>
                   </div>
                 </div>
               </div>
 
-              {/* READ ALOUD COMPONENT: Built-in Speech Synthesis! */}
+              {/* LECTURA EN VOZ ALTA */}
               <div className="border-t border-b border-slate-800 py-3">
                 <ReadAloudPlayer 
                   title={activeStory.title} 
@@ -380,12 +360,11 @@ export default function HostDashboard({
                 />
               </div>
 
-              {/* Ranking & Status Controls */}
+              {/* Calificación y Estado del Episodio */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-studio-850/70 border border-slate-800 rounded-2xl">
-                {/* Host Star Rating */}
                 <div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
-                    Host Quality Score (1-5)
+                    Calificación de la Cabina (1-5)
                   </span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map(star => (
@@ -394,7 +373,7 @@ export default function HostDashboard({
                         type="button"
                         onClick={() => handleRatingChange(activeStory.id, star)}
                         className="p-1 hover:scale-110 transition text-amber-400"
-                        title={`Rate ${star} stars`}
+                        title={`Calificar con ${star} estrellas`}
                       >
                         <Star 
                           className={`w-5 h-5 ${
@@ -411,10 +390,9 @@ export default function HostDashboard({
                   </div>
                 </div>
 
-                {/* Episode Status Selector */}
                 <div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
-                    Episode Broadcast Status
+                    Estatus en la Escaleta
                   </span>
                   <select
                     value={activeStory.status}
@@ -428,21 +406,21 @@ export default function HostDashboard({
                 </div>
               </div>
 
-              {/* Full Content Body */}
+              {/* Texto de la historia */}
               <div className="space-y-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-                  Full Story Transcript:
+                  Historia Completa:
                 </span>
                 <div className="max-h-64 overflow-y-auto pr-2 text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line bg-studio-850/40 p-4 rounded-2xl border border-slate-800/80 font-sans">
                   {activeStory.content}
                 </div>
               </div>
 
-              {/* Attachments / Photos */}
+              {/* Evidencias fotográficas */}
               {activeStory.attachments && activeStory.attachments.length > 0 && (
                 <div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                    Evidence & Photos ({activeStory.attachments.length})
+                    Evidencias y Fotos Adjuntas ({activeStory.attachments.length})
                   </span>
                   <div className="grid grid-cols-2 gap-3">
                     {activeStory.attachments.map(att => (
@@ -466,29 +444,29 @@ export default function HostDashboard({
                 </div>
               )}
 
-              {/* Host Notes Section */}
+              {/* Notas de cabina */}
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">
-                  Host Co-Host Notes (Internal Only)
+                  Notas Internas de Cabina (Para Co-host / Productor)
                 </span>
                 <input
                   type="text"
                   value={activeStory.hostNotes || ''}
                   onChange={(e) => handleNotesChange(activeStory.id, e.target.value)}
-                  placeholder="e.g. Carlos reads dialogue, play creepy synth track at 01:15..."
+                  placeholder="Ej. Meter efecto de sonido en el segundo párrafo, dejar que Lalo comente..."
                   className="w-full px-3.5 py-2.5 bg-studio-850 border border-slate-800 focus:border-rose-500 rounded-xl text-xs text-white placeholder-slate-500 outline-none transition"
                 />
               </div>
             </div>
           ) : (
             <div className="p-12 text-center bg-studio-900 border border-slate-800 rounded-3xl text-slate-400">
-              Select a story to open the Host Studio Inspector.
+              Selecciona una historia para abrir el visor del host.
             </div>
           )}
         </div>
       </div>
 
-      {/* Image Zoom Modal */}
+      {/* Modal Zoom de Fotos */}
       {activeImageModal && (
         <div 
           onClick={() => setActiveImageModal(null)} 
@@ -497,10 +475,10 @@ export default function HostDashboard({
           <div className="relative max-w-4xl max-h-[90vh]">
             <img 
               src={activeImageModal} 
-              alt="Zoomed evidence" 
+              alt="Evidencia ampliada" 
               className="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl border border-slate-700"
             />
-            <p className="text-center text-xs text-slate-400 mt-2">Click anywhere to close zoom</p>
+            <p className="text-center text-xs text-slate-400 mt-2">Haz clic en cualquier parte para cerrar</p>
           </div>
         </div>
       )}

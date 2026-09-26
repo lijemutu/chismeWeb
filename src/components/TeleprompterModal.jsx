@@ -1,46 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { X, ZoomIn, ZoomOut, Mic, Volume2, Clock, FileText, CheckCircle2 } from 'lucide-react';
+import { X, ZoomIn, ZoomOut, Mic, Clock, FileText, CheckCircle2 } from 'lucide-react';
 import ReadAloudPlayer from './ReadAloudPlayer';
 
 export default function TeleprompterModal({ story, onClose, onMarkAired }) {
-  const [fontSize, setFontSize] = useState(24); // px
-  const [isAutoScrolling, setIsAutoScrolling] = useState(false);
-  const [scrollSpeed, setScrollSpeed] = useState(1);
-
-  useEffect(() => {
-    let interval;
-    if (isAutoScrolling) {
-      interval = setInterval(() => {
-        window.scrollBy({ top: scrollSpeed, behavior: 'smooth' });
-      }, 50);
-    }
-    return () => clearInterval(interval);
-  }, [isAutoScrolling, scrollSpeed]);
+  const [fontSize, setFontSize] = useState(24);
 
   if (!story) return null;
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/95 backdrop-blur-xl flex flex-col">
-      {/* Top Teleprompter Controls Bar */}
+      {/* Barra superior de controles en cabina */}
       <header className="sticky top-0 z-50 bg-[#0d0e14]/90 border-b border-slate-800 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 px-3 py-1 bg-red-600/20 text-red-400 border border-red-500/30 rounded-full text-xs font-bold uppercase tracking-wider animate-pulse">
             <span className="w-2 h-2 rounded-full bg-red-500"></span>
-            ON-AIR TELEPROMPTER MODE
+            MODO CABINA • AL AIRE
           </div>
-          <span className="text-slate-400 text-sm hidden sm:inline">|</span>
+          <span className="text-slate-500 text-sm hidden sm:inline">|</span>
           <span className="text-slate-300 text-sm font-medium truncate max-w-md hidden sm:inline">
             {story.title}
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Font resizing */}
+          {/* Ajuste de tamaño de texto */}
           <div className="flex items-center bg-slate-800/80 rounded-xl border border-slate-700/60 p-1">
             <button
               onClick={() => setFontSize(prev => Math.max(16, prev - 2))}
               className="p-1.5 hover:bg-slate-700 text-slate-300 rounded-lg transition"
-              title="Decrease Font Size"
+              title="Reducir tamaño de letra"
             >
               <ZoomOut className="w-4 h-4" />
             </button>
@@ -48,13 +36,13 @@ export default function TeleprompterModal({ story, onClose, onMarkAired }) {
             <button
               onClick={() => setFontSize(prev => Math.min(36, prev + 2))}
               className="p-1.5 hover:bg-slate-700 text-slate-300 rounded-lg transition"
-              title="Increase Font Size"
+              title="Aumentar tamaño de letra"
             >
               <ZoomIn className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Mark as aired button */}
+          {/* Marcar leída al aire */}
           <button
             onClick={() => {
               onMarkAired(story.id);
@@ -63,22 +51,22 @@ export default function TeleprompterModal({ story, onClose, onMarkAired }) {
             className="flex items-center gap-1.5 px-3 py-2 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 text-xs font-semibold rounded-xl transition"
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span className="hidden sm:inline">Mark as Read On-Air</span>
+            <span className="hidden sm:inline">Marcar Leída al Aire</span>
           </button>
 
-          {/* Close button */}
+          {/* Cerrar */}
           <button
             onClick={onClose}
             className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition border border-slate-700"
+            title="Salir de modo cabina"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
       </header>
 
-      {/* Main Reading Canvas */}
+      {/* Área de lectura del host frente al micro */}
       <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
-        {/* Story Metadata Header */}
         <div className="mb-10 pb-8 border-b border-slate-800/80 space-y-4">
           <div className="flex flex-wrap items-center gap-3">
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">
@@ -86,16 +74,16 @@ export default function TeleprompterModal({ story, onClose, onMarkAired }) {
             </span>
             {story.isPatron && (
               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
-                ⭐ {story.patronTier || 'Patron VIP'}
+                ⭐ {story.patronTier || 'Patrón VIP'}
               </span>
             )}
             <div className="flex items-center gap-1.5 text-xs text-slate-400">
               <Clock className="w-3.5 h-3.5 text-slate-500" />
-              <span>{story.estimatedReadTime} read</span>
+              <span>{story.estimatedReadTime} de lectura</span>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-slate-400">
               <FileText className="w-3.5 h-3.5 text-slate-500" />
-              <span>{story.wordCount} words</span>
+              <span>{story.wordCount} palabras</span>
             </div>
           </div>
 
@@ -105,18 +93,18 @@ export default function TeleprompterModal({ story, onClose, onMarkAired }) {
 
           <div className="flex items-center justify-between text-sm text-slate-400">
             <div>
-              Submitted by: <strong className="text-rose-400 font-semibold">{story.authorName}</strong>
+              Anécdota de: <strong className="text-rose-400 font-semibold">{story.authorName}</strong>
             </div>
             <div>
-              Spiciness Level: {'🌶️'.repeat(story.spiciness)}
+              Nivel de Picante: {'🌶️'.repeat(story.spiciness)}
             </div>
           </div>
 
-          {/* Host Notes callout */}
+          {/* Notas de cabina */}
           {story.hostNotes && (
             <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">
-                🎙️ Host Broadcast Notes:
+                🎙️ Notas para Cabina / Co-host:
               </span>
               <p className="text-sm text-amber-200/90 italic">
                 "{story.hostNotes}"
@@ -124,13 +112,13 @@ export default function TeleprompterModal({ story, onClose, onMarkAired }) {
             </div>
           )}
 
-          {/* TTS Player in Prompter */}
+          {/* Reproductor de voz integrado */}
           <div className="pt-2">
             <ReadAloudPlayer title={story.title} text={story.content} author={story.authorName} />
           </div>
         </div>
 
-        {/* Big Teleprompter Story Body */}
+        {/* Texto en letra grande para leer en atril o monitor */}
         <div 
           className="text-slate-100 font-serif leading-relaxed whitespace-pre-line tracking-wide select-none"
           style={{ fontSize: `${fontSize}px`, lineHeight: 1.7 }}
@@ -138,11 +126,11 @@ export default function TeleprompterModal({ story, onClose, onMarkAired }) {
           {story.content}
         </div>
 
-        {/* Attachments within teleprompter */}
+        {/* Evidencias fotográficas */}
         {story.attachments && story.attachments.length > 0 && (
           <div className="mt-16 pt-8 border-t border-slate-800">
             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              📸 Evidence / Attachments ({story.attachments.length})
+              📸 Evidencias y Capturas Adjuntas ({story.attachments.length})
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {story.attachments.map(att => (

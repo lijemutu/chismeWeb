@@ -4,7 +4,7 @@ import { Play, Pause, Square, Volume2, Gauge, AlertCircle } from 'lucide-react';
 export default function ReadAloudPlayer({ title, text, author }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [rate, setRate] = useState(1.15); // Default slight boost for efficient podcast preview
+  const [rate, setRate] = useState(1.15); // Velocidad ligeramente ágil para cabina
   const [isSupported, setIsSupported] = useState(true);
   const utteranceRef = useRef(null);
 
@@ -20,7 +20,7 @@ export default function ReadAloudPlayer({ title, text, author }) {
     };
   }, []);
 
-  const fullTextToRead = `Story title: ${title}. Submitted by ${author}. ${text}`;
+  const fullTextToRead = `Título de la historia: ${title}. Enviada por ${author}. ${text}`;
 
   const startSpeaking = () => {
     if (!('speechSynthesis' in window)) return;
@@ -31,11 +31,15 @@ export default function ReadAloudPlayer({ title, text, author }) {
     utterance.rate = rate;
     utterance.pitch = 1.0;
 
-    // Pick best English voice if available
+    // Buscar la mejor voz en español (priorizando México o Latinoamérica)
     const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')));
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
+    const spanishVoice = voices.find(v => v.lang === 'es-MX') ||
+      voices.find(v => v.lang.startsWith('es-419')) ||
+      voices.find(v => v.lang.startsWith('es')) ||
+      voices[0];
+
+    if (spanishVoice) {
+      utterance.voice = spanishVoice;
     }
 
     utterance.onstart = () => {
@@ -49,7 +53,7 @@ export default function ReadAloudPlayer({ title, text, author }) {
     };
 
     utterance.onerror = (e) => {
-      console.warn("Speech synthesis error or cancelled:", e);
+      console.warn("Error o cancelación en síntesis de voz:", e);
       setIsPlaying(false);
       setIsPaused(false);
     };
@@ -86,7 +90,6 @@ export default function ReadAloudPlayer({ title, text, author }) {
     const newRate = nextRates[(currentIndex + 1) % nextRates.length];
     setRate(newRate);
 
-    // If already playing, restart with new rate
     if (isPlaying && !isPaused) {
       startSpeaking();
     }
@@ -96,7 +99,7 @@ export default function ReadAloudPlayer({ title, text, author }) {
     return (
       <div className="flex items-center gap-2 p-3 text-xs rounded-xl bg-amber-500/10 text-amber-300 border border-amber-500/20">
         <AlertCircle className="w-4 h-4 shrink-0" />
-        <span>Speech Synthesis is not enabled in this browser environment.</span>
+        <span>Tu navegador no tiene activada la síntesis de voz nativa.</span>
       </div>
     );
   }
@@ -114,7 +117,7 @@ export default function ReadAloudPlayer({ title, text, author }) {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-rose-400">
-              Podcast Read-Aloud
+              Lectura en Voz Alta
             </span>
             {isPlaying && !isPaused && (
               <div className="flex items-end gap-0.5 h-3">
@@ -128,17 +131,17 @@ export default function ReadAloudPlayer({ title, text, author }) {
           </div>
           <p className="text-xs text-slate-400">
             {isPlaying 
-              ? (isPaused ? 'Narrator paused' : 'Host hands-free audio previewing...')
-              : 'Listen while prepping or multitasking'}
+              ? (isPaused ? 'Lectura en pausa' : 'Reproduciendo para revisión del host...')
+              : 'Escucha sin leer mientras afinas micrófonos'}
           </p>
         </div>
       </div>
 
       <div className="flex items-center gap-2">
-        {/* Speed button */}
+        {/* Selector de velocidad */}
         <button
           onClick={cycleRate}
-          title="Cycle speech playback speed"
+          title="Cambiar velocidad de lectura"
           className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition border border-slate-700/50"
         >
           <Gauge className="w-3.5 h-3.5 text-rose-400" />
@@ -151,7 +154,7 @@ export default function ReadAloudPlayer({ title, text, author }) {
             className="flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-medium text-xs rounded-xl shadow-lg shadow-rose-900/30 transition transform active:scale-95"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span>Read Aloud</span>
+            <span>Escuchar</span>
           </button>
         ) : (
           <>
@@ -161,7 +164,7 @@ export default function ReadAloudPlayer({ title, text, author }) {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-medium rounded-xl transition"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
-                <span>Resume</span>
+                <span>Reanudar</span>
               </button>
             ) : (
               <button
@@ -169,12 +172,12 @@ export default function ReadAloudPlayer({ title, text, author }) {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 transition"
               >
                 <Pause className="w-3.5 h-3.5 fill-current" />
-                <span>Pause</span>
+                <span>Pausar</span>
               </button>
             )}
             <button
               onClick={handleStop}
-              title="Stop playback"
+              title="Detener lectura"
               className="p-1.5 bg-slate-800 hover:bg-red-500/20 text-slate-400 hover:text-red-400 rounded-xl border border-slate-700 transition"
             >
               <Square className="w-3.5 h-3.5 fill-current" />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Mic, Radio, Sparkles, Zap, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Mic, Radio, Menu, X } from 'lucide-react';
 
-export default function Navbar({ onOpenDeployGuide }) {
+export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollTo = (id) => {
@@ -15,7 +15,7 @@ export default function Navbar({ onOpenDeployGuide }) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-studio-950/85 backdrop-blur-xl border-b border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Logotipo */}
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 p-0.5 shadow-lg shadow-rose-950/40">
             <div className="w-full h-full bg-studio-950 rounded-[14px] flex items-center justify-center">
@@ -29,46 +29,35 @@ export default function Navbar({ onOpenDeployGuide }) {
                 PRO DEMO
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 hidden sm:block">Listener Story Portal for Podcasts</p>
+            <p className="text-[10px] text-slate-400 hidden sm:block">Buzón de Anécdotas para Podcasts</p>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
+        {/* Enlaces de escritorio */}
         <div className="hidden md:flex items-center gap-7 text-xs font-semibold text-slate-300">
-          <button onClick={() => scrollTo('interactive-demo')} className="hover:text-rose-400 transition flex items-center gap-1">
+          <button onClick={() => scrollTo('demo-interactivo')} className="hover:text-rose-400 transition flex items-center gap-1">
             <Radio className="w-3.5 h-3.5 text-rose-400" />
-            <span>Interactive Studio</span>
+            <span>Demo Interactivo</span>
           </button>
-          <button onClick={() => scrollTo('features')} className="hover:text-rose-400 transition">
-            Features
-          </button>
-          <button onClick={() => scrollTo('how-it-works')} className="hover:text-rose-400 transition">
-            Workflow
+          <button onClick={() => scrollTo('caracteristicas')} className="hover:text-rose-400 transition">
+            Características
           </button>
           <button onClick={() => scrollTo('faq')} className="hover:text-rose-400 transition">
-            FAQ
+            Preguntas Frecuentes
           </button>
         </div>
 
-        {/* CTA Buttons */}
+        {/* Botón CTA */}
         <div className="hidden sm:flex items-center gap-3">
           <button
-            onClick={onOpenDeployGuide}
-            className="px-4 py-2 bg-studio-900 hover:bg-studio-850 text-slate-300 hover:text-white text-xs font-semibold rounded-xl border border-slate-700/80 transition flex items-center gap-1.5"
+            onClick={() => scrollTo('demo-interactivo')}
+            className="px-5 py-2.5 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-rose-950/40 transition transform active:scale-95"
           >
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span>Deploy Free</span>
-          </button>
-
-          <button
-            onClick={() => scrollTo('interactive-demo')}
-            className="px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-rose-950/40 transition transform active:scale-95"
-          >
-            Try Demo
+            Probar Demo en Vivo
           </button>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Botón menú móvil */}
         <div className="flex sm:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -79,35 +68,26 @@ export default function Navbar({ onOpenDeployGuide }) {
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Menú desplegable móvil */}
       {mobileMenuOpen && (
         <div className="sm:hidden px-4 pt-2 pb-6 bg-studio-900 border-b border-slate-800 space-y-3">
           <button
-            onClick={() => scrollTo('interactive-demo')}
+            onClick={() => scrollTo('demo-interactivo')}
             className="w-full text-left py-2 text-sm text-slate-200 font-semibold"
           >
-            🎙️ Interactive Studio
+            🎙️ Demo Interactivo
           </button>
           <button
-            onClick={() => scrollTo('features')}
+            onClick={() => scrollTo('caracteristicas')}
             className="w-full text-left py-2 text-sm text-slate-200 font-semibold"
           >
-            ✨ Key Features
+            ✨ Características
           </button>
           <button
             onClick={() => scrollTo('faq')}
             className="w-full text-left py-2 text-sm text-slate-200 font-semibold"
           >
-            ❓ FAQ
-          </button>
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenDeployGuide();
-            }}
-            className="w-full py-2.5 bg-rose-500 text-white text-xs font-bold rounded-xl text-center"
-          >
-            Deploy to Vercel / GitHub Pages
+            ❓ Preguntas Frecuentes
           </button>
         </div>
       )}
