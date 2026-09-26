@@ -17,12 +17,12 @@ En los podcasts donde los hosts leen anécdotas de la audiencia, el método actu
 ## ✨ Características Principales
 
 - **⚡ Envío sin Registro**: La audiencia redacta y manda su historia al instante sin crear cuentas ni contraseñas.
-- **👑 Insignias Patrón VIP**: Prioridad visual destacada en dorado para miembros que apoyan el proyecto.
+- **👑 Login de Patrón VIP**: Solo los miembros verificados pueden iniciar sesión para que su anécdota lleve la insignia dorada y prioridad al aire.
 - **🎙️ Lectura en Voz Alta**: Síntesis de voz nativa del navegador con soporte en español para escuchar las anécdotas a 1.25x o 1.5x mientras preparas el set.
 - **📸 Adjuntos y Evidencias**: Visor y zoom para fotos del lugar, capturas de WhatsApp o tickets.
-- **⭐ Sistema de Calificación y Picante**: Calificación interna del host (1 a 5 estrellas), semáforo de picante (🌶️) y estatus de escaleta (*Seleccionada para Ep #42*, *Joyita del Mes*, etc.).
+- **⭐ Sistema de Calificación**: Calificación interna del host (1 a 5 estrellas), votos y estatus de escaleta (*Seleccionada para Ep #42*, *Joyita del Mes*, etc.).
 - **🏷️ Categorías Temáticas**: Filtro ágil por *Paranormal y Sustos*, *Chisme Godín*, *Citas del Terror*, *Venganza* o *Confesiones*.
-- **📺 Modo Cabina al Aire**: Teleprompter de alto contraste con texto ampliable y notas internas para leer frente al micrófono.
+- **⏱️ Conteo y Tiempos al Aire**: Minutos estimados de lectura y palabras calculadas automáticamente para armar la pauta del show.
 
 ---
 
