@@ -10,7 +10,7 @@ En los podcasts donde los hosts leen anécdotas de la audiencia, el método actu
 1. **Evidencias perdidas**: Fotos de los hechos o capturas de WhatsApp que se extravían o caducan en los mensajes directos.
 2. **Cansancio visual**: Hosts leyendo correos kilométricos para ver si tienen remate antes de grabar.
 3. **Patrons ignorados**: Quienes apoyan en Patreon o membresías se pierden entre correos no deseados.
-4. **Descoordinación en cabina**: Sin control de tiempos al aire ni notas internas entre co-hosts.
+4. **Descoordinación en cabina**: Sin control de tiempos al aire ni notas internas entre co-hosts.1
 
 ---
 
